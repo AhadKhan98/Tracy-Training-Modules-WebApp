@@ -1,4 +1,17 @@
 {% extends "home.html" %}
 {% block module %}
-<h1> Login Here </h1>
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Login / Register</h6>
+  </div>
+  <div class="card-body">
+    <label for="fname">Enter Access Code:</label>
+    <input type="text" id="access_code" name="access_code"></input>
+    <div class="submit-row" >
+      <br>
+      <a href="/home/"><button>Submit</button></a>
+      <a href="/register/"><p align="right">Click here to register if you don't have an access code. </p></a>
+    </div>
+  </div>
+</div>
 {% endblock %}
