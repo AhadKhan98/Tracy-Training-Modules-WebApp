@@ -1,0 +1,20 @@
+{% extends "home.html" %}
+{% block module %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Login / Register</h6>
+  </div>
+  <div class="card-body">
+    <input type="text" id="first_name" name="first_name" placeholder="First Name"><br><br>
+    <input type="text" id="last_name" name="last_name" placeholder="Last Name"><br><br>
+    <input type="text" id="email" name="email" placeholder="Email Address"><br><br>
+    <a href="/home/"><input type="submit" value="Submit">
+    <div class="submit-row" >
+      <br>
+      <p align="right">
+        <a href="/login/">Already have an access code? Click here to Login.</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
