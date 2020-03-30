@@ -23,4 +23,5 @@ urlpatterns = [
     path('home/', home_view.home, name='home'),
     path('login/',home_view.login,name='login'),
     path('register/',home_view.register,name='register'),
+    path('module/',home_view.module,name='module'),
 ]
