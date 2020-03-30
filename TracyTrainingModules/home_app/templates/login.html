@@ -5,11 +5,13 @@
     <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Login / Register</h6>
   </div>
   <div class="card-body">
-    <label for="fname">Enter Access Code:</label>
-    <input type="text" id="access_code" name="access_code"></input>
-    <div class="submit-row" >
+    <form action="/home/" method="get">
+      <label for="access_code">Enter Access Code: </label>
+      <input id="access_code" type="text" name="access_code" required>
       <br>
-      <a href="/home/"><button>Submit</button></a>
+      <input type="submit" name="submit" value="Submit">
+    </form>
+    <div class="submit-row" >
       <p align="right">
         <a href="/register/">Click here to register if you don't have an access code.</a>
       </p>

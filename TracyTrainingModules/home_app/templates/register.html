@@ -5,10 +5,12 @@
     <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Login / Register</h6>
   </div>
   <div class="card-body">
-    <input type="text" id="first_name" name="first_name" placeholder="First Name"><br><br>
-    <input type="text" id="last_name" name="last_name" placeholder="Last Name"><br><br>
-    <input type="text" id="email" name="email" placeholder="Email Address"><br><br>
-    <a href="/home/"><input type="submit" value="Submit">
+    <form action="/home/" method="get">
+      <input type="text" id="first_name" name="first_name" placeholder="First Name" required><br><br>
+      <input type="text" id="last_name" name="last_name" placeholder="Last Name" required><br><br>
+      <input type="email" id="email" name="email" placeholder="Email Address" required><br><br>
+      <input type="submit" value="Submit">
+    </form>
     <div class="submit-row" >
       <br>
       <p align="right">
