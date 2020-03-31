@@ -12,3 +12,6 @@ def register(request):
 
 def module(request):
     return render(request,'module.html')
+
+def quiz(request):
+    return render(request,'quiz.html')
