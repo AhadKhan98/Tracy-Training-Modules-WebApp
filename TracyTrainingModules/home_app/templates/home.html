@@ -25,7 +25,6 @@
 </head>
 
 <body id="page-top">
-
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -39,10 +38,10 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        {% if user.is_authenticated %}
+        {% if user_fname %}
         <a class="nav-link">
           <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Hi, {{user.get_username}}</span></a>
+          <span>Hi, {{user_fname}}</span></a>
           {% else %}
           <a class="nav-link" href="/login/">
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -280,12 +279,16 @@
                   <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Welcome!</h6>
                 </div>
                 <div class="card-body">
+                  {% if user_fname %}
+                  <p style="font-size:120%">Instruction specifically for users that have logged in.</p>
+                  {% else %}
                   <p style="font-size:120%">Hello and welcome to the tracy training modules. Here you must go through each section and complete the quiz at the end in order to move to the next section.
                     Once you have passed all quizzes for all of the sections, you will be given a certificate indicating completion. In order to get started, click on the login button on the left of the screen and
-                    use the access code provided to you by the Labor Program Office. Once logged in, you will be able to access the training modules.
+                    use the access code provided to you by the Labor Program Office. Once logged in, you will be able to access the training modules.</p>
                     <div class="submit-row" align='right'>
                         <a href="/login/"><button>Proceed to Login</button></a>
                     </div>
+                    {% endif %}
 
 
                 </div>

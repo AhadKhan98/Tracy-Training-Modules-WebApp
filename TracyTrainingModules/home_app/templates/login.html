@@ -6,11 +6,12 @@
     <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Login / Register</h6>
   </div>
   <div class="card-body">
-    <form method="post">
+    <form id='login_form' method="post">
+      {% csrf_token %}
       <label for="access_code">Enter Access Code: </label>
-      <input id="access_code" type="text" name="access_code" required>
+      <input style='width:30%' class='form-control' id="access_code" type="text" name="access_code" required>
       <br>
-      <input onclick='get_access_code()' class='btn btn-primary' type="button" value="Submit">
+      <input onclick='login()' id='submit_button' class='btn btn-primary' type="submit" value="Submit">
     </form>
     <div class="submit-row" >
       <p align="right">
@@ -18,27 +19,21 @@
       </p>
     </div>
   </div>
-  <script>
-    function get_access_code(){
-      var access_code = $('#access_code').val();
-      var all_access_codes = {{ all_access_codes|safe }};
-      if (all_access_codes.includes(access_code)){
-        $.ajax({
-          type: "POST",
-          url: {% url 'home' %},
-          data: {'access_code':access_code, 'csrfmiddlewaretoken':'{{ csrf_token }}'},
-          success: function(result){
-            window.location = '/home/';
-          }
-        });
-      }else{
-        alert('Invalid Access Code!');
-        $('#access_code').val('');
-        return;
-      }
-    }
-  </script>
 </div>
+<script>
+  function login(){
+    var all_access_codes =  {{ all_access_codes|safe }};
+    var access_code = $('#access_code').val();
+    var login_form = $('#login_form');
+    if (!all_access_codes.includes(access_code)){
+      alert('Invalid Access Code!')
+      access_code.val('')
+    }
+    else{
+      login_form.attr('action','{% url "home" %}')
+    }
+  }
+</script>
 
 
 {% endblock %}

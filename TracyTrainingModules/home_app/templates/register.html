@@ -5,11 +5,12 @@
     <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Login / Register</h6>
   </div>
   <div class="card-body">
-    <form action="/home/" method="get">
-      <input type="text" id="first_name" name="first_name" placeholder="First Name" required><br><br>
-      <input type="text" id="last_name" name="last_name" placeholder="Last Name" required><br><br>
-      <input type="email" id="email" name="email" placeholder="Email Address" required><br><br>
-      <input type="submit" value="Submit">
+    <form action="{% url 'home' %}" method='post'>
+      {% csrf_token %}
+      <input style='width:30%' class='form-control' type="text" id="first_name" name="first_name" placeholder="First Name" required><br>
+      <input style='width:30%' class='form-control' type="text" id="last_name" name="last_name" placeholder="Last Name" required><br>
+      <input style='width:30%' class='form-control' type="email" id="email" name="email" placeholder="Email Address" required><br>
+      <input class='btn btn-primary' type="submit" value="Submit">
     </form>
     <div class="submit-row" >
       <br>
@@ -19,4 +20,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}
