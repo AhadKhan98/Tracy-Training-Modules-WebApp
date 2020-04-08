@@ -26,21 +26,25 @@ def home(request):
         if 'access_code' in request.POST: # Coming from login.html
             access_code = request.POST['access_code']
             user_fname = Custom_User.objects.get(access_code=access_code).first_name
-            return set_cookies(request,access_code,user_fname) # Loads homepage and sets cookies for logged in user
+            user_sections = get_sections(access_code)
+            return set_cookies(request,access_code,user_fname,user_sections) # Loads homepage and sets cookies for logged in user
 
         elif 'first_name' in request.POST: # Coming from register.html
-            first_name,last_name,email = request.POST['first_name'],request.POST['last_name'],request.POST['email']
+            user_fname,user_lname,email = request.POST['first_name'],request.POST['last_name'],request.POST['email']
             access_code = generate_access_code()
-            user = Custom_User(access_code=access_code,user_type='sup',first_name=first_name,last_name=last_name,email=email,sections='1,0,0,0,0,0,0,0,0,0,0')
+            user = Custom_User(access_code=access_code,user_type='sup',first_name=user_fname,last_name=user_lname,email=email,sections='1,0,0,0,0,0,0,0,0,0,0')
             user.save()
+            user_sections = get_sections(access_code)
+            return set_cookies(request,access_code,user_fname,user_sections)
 
     else: # GET Method
 
         access_code,user_fname = get_cookies(request)
-        if access_code != '': # If cookies are stored
+        if access_code != '':
+            user_sections = get_sections(access_code)
+            return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+        else:
             return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname})
-        else: # No cookies found
-            return render(request,'home.html')
 
 
 def login(request):
@@ -60,8 +64,16 @@ def register(request):
 
 def module(request):
     access_code,user_fname = get_cookies(request)
-    return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname})
+    if access_code != '':
+        user_sections = get_sections(access_code)
+        return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+    else:
+        return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname})
 
 def quiz(request):
     access_code,user_fname = get_cookies(request)
-    return render(request,'quiz.html',{'access_code':access_code,'user_fname':user_fname})
+    if access_code != '':
+        user_sections = get_sections(access_code)
+        return render(request,'quiz.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+    else:
+        return render(request,'quiz.html',{'access_code':access_code,'user_fname':user_fname})

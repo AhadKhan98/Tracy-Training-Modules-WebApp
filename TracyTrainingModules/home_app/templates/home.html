@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,6 +24,7 @@
 </head>
 
 <body id="page-top">
+
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -60,7 +60,7 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec1" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.0 %}href="#" data-toggle="collapse" data-target="#sec1"{%  endif %}>
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 1</span>
         </a>
@@ -76,7 +76,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec2" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.1 %}href="#" data-toggle="collapse" data-target="#sec2"{% endif %} >
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 2</span>
         </a>
@@ -93,7 +93,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec3" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.2 %}href="#" data-toggle="collapse" data-target="#sec3" {% endif %}>
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 3</span>
         </a>
@@ -115,7 +115,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec4" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.3 %}href="#" data-toggle="collapse" data-target="#sec4" {% endif %}>
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 4</span>
         </a>
@@ -131,7 +131,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec5" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.4 %}href="#" data-toggle="collapse" data-target="#sec5" {% endif %}>
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 5</span>
         </a>
@@ -147,7 +147,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec6" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.5 %}href="#" data-toggle="collapse" data-target="#sec6" {% endif %}>
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 6</span>
         </a>
@@ -163,7 +163,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec7" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.6 %}href="#" data-toggle="collapse" data-target="#sec7" {% endif %}>
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 7</span>
         </a>
@@ -180,7 +180,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec8" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.7 %}href="#" data-toggle="collapse" data-target="#sec8" {% endif %}>
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 8</span>
         </a>
@@ -195,7 +195,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec9" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.8 %}href="#" data-toggle="collapse" data-target="#sec9" {% endif %}>
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 9</span>
         </a>
@@ -214,7 +214,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec10" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.9 %}href="#" data-toggle="collapse" data-target="#sec10"{% endif %} >
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 10</span>
         </a>
@@ -233,7 +233,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#sec11" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" {% if '1' == user_sections.10 %}href="#" data-toggle="collapse" data-target="#sec11"{% endif %} >
           <i class="fas fa-fw fa-cog"></i>
           <span>Section 11</span>
         </a>
@@ -246,6 +246,8 @@
           </div>
         </div>
       </li>
+
+
 
       <!-- Divider -->
       <hr class="sidebar-divider">
