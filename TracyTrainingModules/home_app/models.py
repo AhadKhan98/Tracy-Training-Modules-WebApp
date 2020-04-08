@@ -8,3 +8,6 @@ class Custom_User(models.Model):
     last_name = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
     sections = models.CharField(max_length=100)
+
+    def __str__(self):
+        return '{}, {}'.format(self.first_name,self.last_name)
