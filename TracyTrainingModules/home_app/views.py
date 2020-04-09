@@ -62,18 +62,24 @@ def register(request):
     access_code,user_fname = get_cookies(request)
     return render(request,'register.html',{'access_code':access_code,'user_fname':user_fname})
 
-def module(request):
+def module(request,sec_num,module_num):
     access_code,user_fname = get_cookies(request)
     if access_code != '':
         user_sections = get_sections(access_code)
-        return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+        if user_sections[sec_num-1] == '1':
+            return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'sec_num':sec_num,'module_num':module_num})
+        else:
+            return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
     else:
-        return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname})
+        return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname})
 
-def quiz(request):
+def quiz(request,sec_num):
     access_code,user_fname = get_cookies(request)
     if access_code != '':
         user_sections = get_sections(access_code)
-        return render(request,'quiz.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+        if user_sections[sec_num-1] == '1':
+            return render(request,'quiz.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'sec_num':sec_num})
+        else:
+            return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
     else:
-        return render(request,'quiz.html',{'access_code':access_code,'user_fname':user_fname})
+        return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname})

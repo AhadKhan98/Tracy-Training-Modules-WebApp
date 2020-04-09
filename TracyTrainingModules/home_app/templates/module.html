@@ -2,8 +2,9 @@
 {% block module %}
 <div class="card shadow mb-4">
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Module # 1</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Section # {{ sec_num }} | Module # {{ module_num }}</h6>
   </div>
+  {% if 1 == sec_num and 1 == module_num %}
   <div class="card-body">
     <div class="text-center">
       <iframe height="400" width="650" class="embed-responsive-item" src="https://www.youtube.com/embed/ARxu5PIT-P4" allowfullscreen></iframe>
@@ -30,8 +31,49 @@
       You will now be redirected to UltraTime.
     </p>
     <div class="text-right">
-      <a href="/home/"><button>Next</button></a>
+      <a href="/section{{sec_num}}-module{{module_num|add:1}}/"><button class='btn btn-primary btn-lg'>Proceed to Module {{ module_num|add:1 }}</button></a>
     </div>
   </div>
+
+  {% elif 1 == sec_num and 2 == module_num %}
+  <div class="card-body">
+    <div class="text-center">
+      <iframe height="400" width="650" class="embed-responsive-item" src="https://www.youtube.com/embed/ARxu5PIT-P4" allowfullscreen></iframe>
+    </div>
+    <hr>
+    <p>
+      Module Two will be shown here
+    </p>
+    <div class="text-right">
+      <a href="/section{{sec_num}}-module{{module_num|add:1}}/"><button class='btn btn-primary btn-lg'>Proceed to Module {{ module_num|add:1 }}</button></a>
+    </div>
+  </div>
+
+  {% elif 1 == sec_num and 3 == module_num %}
+  <div class="card-body">
+    <div class="text-center">
+      <iframe height="400" width="650" class="embed-responsive-item" src="https://www.youtube.com/embed/ARxu5PIT-P4" allowfullscreen></iframe>
+    </div>
+    <hr>
+    <p>
+      Module Three will be shown here
+    </p>
+    <div class="text-right">
+      <a href="/quiz/"><button class='btn btn-primary btn-lg'>Proceed to Quiz</button></a>
+    </div>
+  </div>
+
+  {% else %}
+  <div class="card-body">
+    <hr>
+      <h1>Requested Module Does Not Exist!</h1>
+    <div class="text-right">
+      <a href="/home/"><button class='btn btn-primary btn-lg'>Proceed to Module 1</button></a>
+    </div>
+  </div>
+
+
+
+  {% endif %}
 </div>
 {% endblock %}

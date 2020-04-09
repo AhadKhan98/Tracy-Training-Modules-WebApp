@@ -23,7 +23,7 @@ urlpatterns = [
     path('home/', home_view.home, name='home'),
     path('login/',home_view.login,name='login'),
     path('register/',home_view.register,name='register'),
-    path('module/',home_view.module,name='module'),
-    path('quiz/',home_view.quiz,name='quiz'),
+    path('section<int:sec_num>-module<int:module_num>/',home_view.module,name='module'),
+    path('section<int:sec_num>-quiz/',home_view.quiz,name='quiz'),
     path('logout/',home_view.logout,name='logout'),
 ]
