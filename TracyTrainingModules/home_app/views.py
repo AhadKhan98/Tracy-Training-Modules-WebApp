@@ -25,6 +25,10 @@ def home(request):
 
         if 'access_code' in request.POST: # Coming from login.html
             access_code = request.POST['access_code']
+            # In case of an invalid access code
+            if access_code not in all_access_codes:
+                info_message = {'success_or_danger':'danger','strong_text':'Invalid Access Code!','info_text':'Please enter a valid access code. If you don\'t have a code, register below and a new code will be e-mailed to you.'}
+                return render(request,'login.html',{'info_message':info_message})
             user_fname = Custom_User.objects.get(access_code=access_code).first_name
             user_sections = get_sections(access_code)
             return set_cookies(request,access_code,user_fname,user_sections) # Loads homepage and sets cookies for logged in user
@@ -52,7 +56,7 @@ def login(request):
     all_access_codes = []
     for user in all_users:
         all_access_codes += [user.access_code]
-    return render(request,'login.html',{'all_access_codes':all_access_codes})
+    return render(request,'login.html')
 
 def logout(request):
     response = delete_cookies(request)

@@ -6,12 +6,12 @@
     <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Login / Register</h6>
   </div>
   <div class="card-body">
-    <form id='login_form' method="post">
+    <form action='{% url "home" %}' id='login_form' method="post">
       {% csrf_token %}
       <label for="access_code">Enter Access Code: </label>
       <input style='width:30%' class='form-control' id="access_code" type="text" name="access_code" required>
       <br>
-      <input onclick='login()' id='submit_button' class='btn btn-primary' type="submit" value="Submit">
+      <input id='submit_button' class='btn btn-primary' type="submit" value="Submit">
     </form>
     <div class="submit-row" >
       <p align="right">
@@ -20,20 +20,6 @@
     </div>
   </div>
 </div>
-<script>
-  function login(){
-    var all_access_codes =  {{ all_access_codes|safe }};
-    var access_code = $('#access_code').val();
-    var login_form = $('#login_form');
-    if (!all_access_codes.includes(access_code)){
-      alert('Invalid Access Code!')
-      access_code.val('')
-    }
-    else{
-      login_form.attr('action','{% url "home" %}')
-    }
-  }
-</script>
 
 
 {% endblock %}

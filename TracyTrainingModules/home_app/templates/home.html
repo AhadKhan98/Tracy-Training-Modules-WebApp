@@ -10,6 +10,7 @@
   <meta name="author" content="">
 
   <title>Tracy Training Modules</title>
+
   <!-- Script for Quiz-->
   <script type="text/javascript" src="{% static 'js/external/mootools-core-1.4.5-minified.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/dg-count-down.js' %}"></script>
@@ -20,10 +21,14 @@
 
   <!-- Custom styles for this template-->
   <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+  <!-- JS for bootstrap and modals-->
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 </head>
 
 <body id="page-top">
+
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -268,6 +273,10 @@
           <br>
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Tracy Training Modules</h1>
+            <div id='info_message' class="alert alert-{{info_message.success_or_danger}} alert-dismissible {% if info_message %} visible {% else %} invisible {% endif %}">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong>{{info_message.strong_text}}</strong><p>{{info_message.info_text}}</p>
+            </div>
           </div>
 
           <!-- Content Row -->
@@ -289,7 +298,7 @@
                     Once you have passed all quizzes for all of the sections, you will be given a certificate indicating completion. In order to get started, click on the login button on the left of the screen and
                     use the access code provided to you by the Labor Program Office. Once logged in, you will be able to access the training modules.</p>
                     <div class="submit-row" align='right'>
-                        <a href="/login/"><button>Proceed to Login</button></a>
+                        <a href="/login/"><button class='btn btn-primary'>Proceed to Login</button></a>
                     </div>
                     {% endif %}
 
@@ -328,6 +337,13 @@
 
 
   <!-- Bootstrap core JavaScript-->
+  <script>
+  window.setTimeout(function() {
+  $("#info_message").fadeTo(500, 0).slideUp(500, function(){
+      $(this).remove();
+  });
+}, 3500);
+  </script>
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
