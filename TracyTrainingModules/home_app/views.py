@@ -2,6 +2,7 @@ from django.shortcuts import render
 from home_app.models import Custom_User
 from home_app.cookies_handler import *
 import random,string
+from django.core.mail import send_mail
 
 
 def home(request):
@@ -39,6 +40,9 @@ def home(request):
             user = Custom_User(access_code=access_code,user_type='sup',first_name=user_fname,last_name=user_lname,email=email,sections='1,0,0,0,0,0,0,0,0,0,0')
             user.save()
             user_sections = get_sections(access_code)
+            # Send e-mail to newly registered user
+            email_body = '''Hi {}!\n\nThank you for signing up to the Berea College Labor Program\'s Tracy Training Modules.\nHere is your access code: {}\n\nPlease use the provided code to login to the website. If you have any questions, feel free to send us an email.\n\nBest Regards,\nThe Labor Program Team'''.format(user_fname,access_code)
+            send_mail('Tracy Training Modules Access Code',email_body,'iahadkhan98@gmail.com',[email],fail_silently=False)
             return set_cookies(request,access_code,user_fname,user_sections)
 
     else: # GET Method

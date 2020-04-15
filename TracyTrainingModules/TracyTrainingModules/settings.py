@@ -25,6 +25,14 @@ SECRET_KEY = 'e%p84^vof5_gs)r_&ovu3&ca*ma08^j9b2(gcj3l8hu5wgk0*d'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# EMAIL HANDLER
+
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'email_goes_here'
+EMAIL_HOST_PASSWORD = 'password_goes_here'
+EMAIL_PORT = 465
+
 ALLOWED_HOSTS = []
 
 
