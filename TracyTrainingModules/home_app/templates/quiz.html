@@ -3,7 +3,7 @@
 <style>
   .question{
     font-size: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   .answers {
     margin-bottom: 20px;
@@ -11,24 +11,9 @@
     display: inline-block;
   }
   .answers label{
-    display: block;
-    margin-bottom: 10px;
-  }
-  button{
-    font-family: 'Work Sans', sans-serif;
-  	font-size: 22px;
-  	background-color: #279;
-  	color: #fff;
-  	border: 0px;
-  	border-radius: 3px;
-  	padding: 20px;
-  	cursor: pointer;
-  	margin-bottom: 20px;
-  }
-  button:hover{
-  	background-color: #38a;
-  }
-
+  display: block;
+  margin-bottom: 10px;
+}
   .slide{
     position: absolute;
     left: 0px;
@@ -55,13 +40,12 @@
     <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Section {{ sec_num }} Quiz</h6>
   </div>
   <div class="card-body">
-    <h1>Quiz</h1>
     <div class="quiz-container">
       <div id="quiz"></div>
     </div>
-    <button id="previous">Previous Question</button>
-    <button id="next">Next Question</button>
-    <button id="submit">Submit Quiz</button>
+    <button class='btn btn-primary btn-lg' id="previous">Previous Question</button>
+    <button class='btn btn-primary btn-lg' id="next">Next Question</button>
+    <button class='btn btn-primary btn-lg' id="submit">Submit Quiz</button>
     <div id="results"></div>
     <script id="INLINE_PEN_JS_ID">
       (function () {
@@ -94,7 +78,6 @@
           output.push(
           `<div class="slide">
                 <div class="question"> ${currentQuestion.question} </div>
-                <div id="question_number">${'Question '+ (questionNumber+1) + ' of ' + (myQuestions.length)}</div>
                 <div class="answers"> ${answers.join("")} </div>
               </div>`);
 
@@ -127,13 +110,13 @@
             numCorrect++;
 
             // color the answers green
-            answerContainers[questionNumber].style.color = 'lightgreen';
+            // answerContainers[questionNumber].style.color = 'lightgreen';
           }
           // if answer is wrong or blank
-          else {
-              // color the answers red
-              answerContainers[questionNumber].style.color = 'red';
-            }
+          // else {
+          //     // color the answers red
+          //     answerContainers[questionNumber].style.color = 'red';
+          //   }
         });
 
         // show number of correct answers out of total
@@ -200,10 +183,9 @@
         answers: {
           a: "Angular",
           b: "jQuery",
-          c: "RequireJS",
-          d: "ESLint" },
+          c: "RequireJS",},
 
-        correctAnswer: "d" }];
+        correctAnswer: "c" }];
 
 
 
@@ -225,7 +207,7 @@
       nextButton.addEventListener("click", showNextSlide);
     })();
         //# sourceURL=pen.js
-  </script>
+      </script>
+    </div>
   </div>
-</div>
 {% endblock %}

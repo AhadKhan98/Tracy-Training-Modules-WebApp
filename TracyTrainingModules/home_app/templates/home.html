@@ -273,10 +273,12 @@
           <br>
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Tracy Training Modules</h1>
-            <div id='info_message' class="alert alert-{{info_message.success_or_danger}} alert-dismissible {% if info_message %} visible {% else %} invisible {% endif %}">
+            {% if info_message %}
+            <div id='info_message' class="alert alert-{{info_message.success_or_danger}} alert">
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
               <strong>{{info_message.strong_text}}</strong><p>{{info_message.info_text}}</p>
             </div>
+            {% endif %}
           </div>
 
           <!-- Content Row -->

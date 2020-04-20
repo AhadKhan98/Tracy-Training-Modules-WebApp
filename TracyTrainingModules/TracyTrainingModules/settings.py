@@ -29,8 +29,8 @@ DEBUG = True
 
 EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'email_goes_here'
-EMAIL_HOST_PASSWORD = 'password_goes_here'
+EMAIL_HOST_USER = 'iahadkhan98@gmail.com'
+EMAIL_HOST_PASSWORD = 'publicvoidstart()'
 EMAIL_PORT = 465
 
 ALLOWED_HOSTS = []
