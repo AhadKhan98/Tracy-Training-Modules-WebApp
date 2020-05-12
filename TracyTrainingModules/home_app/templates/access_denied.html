@@ -1,12 +1,16 @@
 {% extends "home.html" %}
 {% block module %}
 <div class="card shadow mb-4">
+  
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Login / Register</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Error</h6>
   </div>
-  <div class="card-body">
-    <h1>YOU DO NOT HAVE ACCESS TO THIS PAGE!</h1>
-  </div>
-</div>
 
+  <div class="card-body">
+    <div class="text-center">
+      <h1>You do not have access to this page. Proceed to <a href="{% url 'login' %}">Login</a>.</h1>
+    </div>
+  </div>
+
+</div>
 {% endblock %}

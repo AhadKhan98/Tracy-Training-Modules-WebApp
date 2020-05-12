@@ -1,79 +1,29 @@
 {% extends "home.html" %}
 {% block module %}
 <div class="card shadow mb-4">
+  {% if content %}
   <div class="card-header py-3">
-    <h6 class="m-0 font-weight-bold text-primary">Section # {{ sec_num }} | Module # {{ module_num }}</h6>
+    <h6 class="m-0 font-weight-bold text-primary">Section # {{ content.section_num }} | Module # {{ content.module_num }}</h6>
   </div>
-  {% if 1 == sec_num and 1 == module_num %}
   <div class="card-body">
     <div class="text-center">
-      <iframe height="400" width="650" class="embed-responsive-item" src="https://www.youtube.com/embed/ARxu5PIT-P4" allowfullscreen></iframe>
+      <iframe height="400" width="650" class="embed-responsive-item" src="{{ content.yt_link }}" allowfullscreen></iframe>
     </div>
     <hr>
-    <p>
-      Currently there are three ways to access ultratime:<br><br>
-      <b><u>The First Method:  </u></b><br>
-      1) Go to your myBerea login page <br>
-      2) On the right side of the screen, under
-      ‘My Single Signon Partner Applications’ click on the link that says
-      ‘Ultratime Supervisor Functions’ <br>
-      3) Now login in with your credentials. Note: You won’t be redirected to ultratime until you login. <br>
-      You will now be redirected to UltraTime. <br><br>
-      <b><u>The Second Method: </u></b><br>
-      1) Go to your myBerea login page and login with your credentials. <br>
-      2) Click on the ‘Work’ tab and under ‘Student Supervisor Links’ click ‘Student Time and Schedule’ <br>
-      You will now be redirected to UltraTime. <br><br>
-      <b><u>The Third Method: </u></b><br>
-      1) For supervisors who do not have access to the myBerea portal,
-      simply head to this URL:
-      <a href="https://timemachine1-vm.berea.edu/UltraTime/">https://timemachine1-vm.berea.edu/UltraTime/</a><br>
-      2) Login in with the username and password given to you by the system administrator. <br>
-      You will now be redirected to UltraTime.
-    </p>
+    {{ content.content|safe }}
     <div class="text-right">
-      <a href="/section{{sec_num}}-module{{module_num|add:1}}/"><button class='btn btn-primary btn-lg'>Proceed to Module {{ module_num|add:1 }}</button></a>
+      <a href="/section{{content.section_num}}-module{{content.module_num|add:1}}/"><button class='btn btn-primary btn-lg'>Proceed to Module {{ content.module_num|add:1 }}</button></a>
     </div>
   </div>
-
-  {% elif 1 == sec_num and 2 == module_num %}
-  <div class="card-body">
-    <div class="text-center">
-      <iframe height="400" width="650" class="embed-responsive-item" src="https://www.youtube.com/embed/ARxu5PIT-P4" allowfullscreen></iframe>
-    </div>
-    <hr>
-    <p>
-      Module Two will be shown here
-    </p>
-    <div class="text-right">
-      <a href="/section{{sec_num}}-module{{module_num|add:1}}/"><button class='btn btn-primary btn-lg'>Proceed to Module {{ module_num|add:1 }}</button></a>
-    </div>
-  </div>
-
-  {% elif 1 == sec_num and 3 == module_num %}
-  <div class="card-body">
-    <div class="text-center">
-      <iframe height="400" width="650" class="embed-responsive-item" src="https://www.youtube.com/embed/ARxu5PIT-P4" allowfullscreen></iframe>
-    </div>
-    <hr>
-    <p>
-      Module Three will be shown here
-    </p>
-    <div class="text-right">
-      <a href="/quiz/"><button class='btn btn-primary btn-lg'>Proceed to Quiz</button></a>
-    </div>
-  </div>
-
   {% else %}
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Error</h6>
+  </div>
   <div class="card-body">
-    <hr>
-      <h1>Requested Module Does Not Exist!</h1>
-    <div class="text-right">
-      <a href="/home/"><button class='btn btn-primary btn-lg'>Proceed to Module 1</button></a>
+    <div class="text-center">
+      <h1>Requested module not found.</h1>
     </div>
   </div>
-
-
-
   {% endif %}
 </div>
 {% endblock %}

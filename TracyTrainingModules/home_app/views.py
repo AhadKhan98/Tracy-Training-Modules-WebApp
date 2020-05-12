@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from home_app.models import Custom_User
+from home_app.models import Custom_User, Content
 from home_app.cookies_handler import *
 import random,string
 from django.core.mail import send_mail
@@ -75,9 +75,12 @@ def module(request,sec_num,module_num):
     if access_code != '':
         user_sections = get_sections(access_code)
         if user_sections[sec_num-1] == '1':
-            return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'sec_num':sec_num,'module_num':module_num})
-        else:
-            return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+            content = Content.objects.filter(section_num=sec_num,module_num=module_num)
+            if len(content) != 0:
+                content = content[0]
+                return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'content':content})
+            else:
+                return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
     else:
         return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname})
 

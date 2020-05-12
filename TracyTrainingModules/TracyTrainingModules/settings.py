@@ -30,7 +30,7 @@ DEBUG = True
 EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'iahadkhan98@gmail.com'
-EMAIL_HOST_PASSWORD = 'publicvoidstart()'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 465
 
 ALLOWED_HOSTS = []
