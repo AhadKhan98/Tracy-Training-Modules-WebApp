@@ -26,4 +26,5 @@ urlpatterns = [
     path('section<int:sec_num>-module<int:module_num>/',home_view.module,name='module'),
     path('section<int:sec_num>-quiz/',home_view.quiz,name='quiz'),
     path('logout/',home_view.logout,name='logout'),
+    path('quiz-success/<int:sec_num>/',home_view.enable_next_section_and_redirect, name='enable_next_section_and_redirect'),
 ]

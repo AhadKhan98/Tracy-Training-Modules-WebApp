@@ -1,38 +1,26 @@
 {% extends "home.html" %}
 {% block module %}
-<style>
-  .question{
-    font-size: 30px;
-    margin-bottom: 5px;
-  }
-  .answers {
-    margin-bottom: 20px;
-    text-align: left;
-    display: inline-block;
-  }
-  .answers label{
-  display: block;
-  margin-bottom: 10px;
-}
-  .slide{
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.5s;
-  }
-  .active-slide{
-    opacity: 1;
-    z-index: 2;
-  }
-  .quiz-container{
-    position: relative;
-    height: 200px;
-    margin-top: 40px;
-  }
-</style>
+
+<!-- Modal -->
+ <div class="modal fade" id="successModal" role="dialog">
+   <div class="modal-dialog">
+
+     <!-- Modal content-->
+     <div class="modal-content">
+       <div class="modal-header">
+         <h4 class="modal-title">Success!</h4>
+         <a href=""><button type="button" class="close" data-dismiss="modal">&times;</button></a>
+       </div>
+       <div class="modal-body">
+         <p>Good job. You got all the answers right. You can now proceed to the next section.</p>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-success" data-dismiss="modal">Next</button>
+       </div>
+     </div>
+
+   </div>
+ </div>
 
 
 <div class="card shadow mb-4">
@@ -122,6 +110,11 @@
         // show number of correct answers out of total
         resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
         if (numCorrect == myQuestions.length){
+          $('#successModal').modal('show');
+          $('#successModal').on('hidden.bs.modal',function(){
+            var url = "{% url 'enable_next_section_and_redirect' sec_num=sec_num %}";
+            window.location = url;
+          });
           resultsContainer.innerHTML = `ALL CORRECT`;
           submitButton.remove();
         }
