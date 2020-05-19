@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 from home_app.models import Custom_User, Content
 from home_app.cookies_handler import *
@@ -14,17 +14,6 @@ def home(request):
     all_access_codes = []
     for user in all_users:
         all_access_codes += [user.access_code]
-
-    # Trying to add success message if coming from quiz-success page
-    # referer = request.META.get('HTTP_REFERER')
-    # if referer and 'quiz' in referer:
-    #     sec_num = referer[referer.index('m')+1]
-    #     info_message = {'success_or_danger':'success','strong_text':'Success!','info_text':'Section {} has been successfully unlocked.'.format(int(sec_num)+1)}
-    #     access_code,user_fname = get_cookies(request)
-    #     if access_code != '':
-    #         user_sections = get_sections(access_code)
-    #         return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message})
-
 
     def generate_access_code():
         """ This function randomly generates an access code and makes sure it is not duplicated in the database. """
@@ -58,11 +47,18 @@ def home(request):
             return set_cookies(request,access_code,user_fname,user_sections)
 
     else: # GET Method
-
         access_code,user_fname = get_cookies(request)
         if access_code != '':
             user_sections = get_sections(access_code)
+
+            referer = request.META.get('HTTP_REFERER')
+            if referer is not None and 'section' in referer and 'quiz' in referer:
+                sec_num = referer[referer.index('n')+1:referer.index('-')]
+                info_message = {'success_or_danger':'success','strong_text':'Success!','info_text':'Section {} has been successfully unlocked.'.format(int(sec_num)+1)}
+                return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message})
+
             return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+
         else:
             return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname})
 
@@ -113,7 +109,7 @@ def enable_next_section_and_redirect(request,sec_num):
     user_sections[sec_num] = '1'
     updated_sections = ",".join(user_sections)
     usr = Custom_User.objects.get(access_code=access_code)
-    print('usr',usr)
     usr.sections = updated_sections
     usr.save()
-    return HttpResponsePermanentRedirect(reverse('home'))
+    info_message = {'success_or_danger':'success','strong_text':'Success!','info_text':'Section {} has been successfully unlocked.'.format(int(sec_num)+1)}
+    return HttpResponseRedirect(reverse('home'))
