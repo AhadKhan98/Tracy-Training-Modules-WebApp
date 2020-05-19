@@ -55,6 +55,8 @@ def home(request):
             if referer is not None and 'section' in referer and 'quiz' in referer:
                 sec_num = referer[referer.index('n')+1:referer.index('-')]
                 info_message = {'success_or_danger':'success','strong_text':'Success!','info_text':'Section {} has been successfully unlocked.'.format(int(sec_num)+1)}
+                if sec_num == '11':
+                    info_message = {'success_or_danger':'success','strong_text':'Congratulations!','info_text':'You have successfully completed the Tracy Training Modules.'.format(int(sec_num)+1)}
                 return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message})
 
             return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
@@ -106,10 +108,11 @@ def quiz(request,sec_num):
 def enable_next_section_and_redirect(request,sec_num):
     access_code,user_fname = get_cookies(request)
     user_sections = get_sections(access_code)
+    if sec_num == 11:
+        return HttpResponseRedirect(reverse('home'))
     user_sections[sec_num] = '1'
     updated_sections = ",".join(user_sections)
     usr = Custom_User.objects.get(access_code=access_code)
     usr.sections = updated_sections
     usr.save()
-    info_message = {'success_or_danger':'success','strong_text':'Success!','info_text':'Section {} has been successfully unlocked.'.format(int(sec_num)+1)}
     return HttpResponseRedirect(reverse('home'))
