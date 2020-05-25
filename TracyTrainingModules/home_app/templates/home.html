@@ -1,4 +1,6 @@
 {% load static %}
+{% load custom_templates %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,6 +67,34 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
+      
+      {% for section,module in section_range.items %}
+        {% with section_idx=section|add:"-1" %}
+        <div>
+           <li class="nav-item">
+            <a class="nav-link collapsed" {% if '1' == user_sections|by_idx:section_idx %}href="#" data-toggle="collapse" data-target="#sec{{section}}"{%  endif %}>
+              <i class="fas fa-fw fa-cog"></i>
+              <span>Section {{section}}</span>
+            </a>
+            <div id="sec{{section}}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Modules</h6>
+                  {% for i in "x"|ljust:module %}
+                    <a class="collapse-item" href="/section{{section}}-module{{forloop.counter}}/">Module {{forloop.counter}}</a>
+                  {% endfor %}
+                  <a class="collapse-item" href="/section{{section}}-quiz/">Quiz</a>
+                  {% comment %} <a class="collapse-item" href="/section1-module1/">Module 1</a>
+                  <a class="collapse-item" href="/section1-module2/">Module 2</a>
+                  <a class="collapse-item" href="/section1-module3/">Module 3</a>
+                  <a class="collapse-item" href="/section{{section}}-quiz/">Quiz</a> {% endcomment %}
+              </div>
+            </div>
+          </li>
+        </div>
+      {% endwith %}
+      {% endfor %}
+
+      {% comment %} 
       <li class="nav-item">
         <a class="nav-link collapsed" {% if '1' == user_sections.0 %}href="#" data-toggle="collapse" data-target="#sec1"{%  endif %}>
           <i class="fas fa-fw fa-cog"></i>
@@ -251,7 +281,7 @@
             <a class="collapse-item" href="/section11-quiz/">Quiz</a>
           </div>
         </div>
-      </li>
+      </li> {% endcomment %}
 
 
 

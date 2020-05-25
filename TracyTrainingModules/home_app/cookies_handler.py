@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from home_app.models import Custom_User
+from home_app.models import Custom_User,Content
 
 def set_cookies(request,access_code,user_fname,user_sections):
     info_message = {'success_or_danger':'success','strong_text':'Welcome, {}!'.format(user_fname),'info_text':'You have been successfully authorized.'}
@@ -28,3 +28,17 @@ def delete_cookies(request):
 def get_sections(access_code):
     user_sections = Custom_User.objects.get(access_code=access_code).sections.split(',')
     return user_sections
+
+def get_sections_range():
+    all_content_list = list(Content.objects.all())
+    all_content_list = list(map(str,all_content_list))
+    sections_and_modules = {}
+    for content in all_content_list:
+        colon_idx = content.index(':')
+        space_idx = content.index(' ')
+        current_section_num = int(content[colon_idx+1:space_idx])
+        if current_section_num not in sections_and_modules:
+            sections_and_modules[current_section_num] = 1
+        else:
+            sections_and_modules[current_section_num] += 1
+    return sections_and_modules

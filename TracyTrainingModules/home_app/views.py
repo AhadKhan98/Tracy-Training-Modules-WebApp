@@ -9,6 +9,9 @@ from django.core.mail import send_mail
 
 def home(request):
 
+    # Gets list of all available sections and modules
+    sections_and_modules = get_sections_range()
+
     # Gives global access to all access codes stored in the database
     all_users = Custom_User.objects.all()
     all_access_codes = []
@@ -47,6 +50,7 @@ def home(request):
             return set_cookies(request,access_code,user_fname,user_sections)
 
     else: # GET Method
+
         access_code,user_fname = get_cookies(request)
         if access_code != '':
             user_sections = get_sections(access_code)
@@ -59,9 +63,10 @@ def home(request):
                     info_message = {'success_or_danger':'success','strong_text':'Congratulations!','info_text':'You have successfully completed the Tracy Training Modules.'.format(int(sec_num)+1)}
                 return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message})
 
-            return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+            return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
 
         else:
+            print(sections_and_modules)
             return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname})
 
 
