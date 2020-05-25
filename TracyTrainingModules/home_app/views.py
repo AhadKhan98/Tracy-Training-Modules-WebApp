@@ -33,10 +33,10 @@ def home(request):
             # In case of an invalid access code
             if access_code not in all_access_codes:
                 info_message = {'success_or_danger':'danger','strong_text':'Invalid Access Code!','info_text':'Please enter a valid access code. If you don\'t have a code, register below and a new code will be e-mailed to you.'}
-                return render(request,'login.html',{'info_message':info_message})
+                return render(request,'login.html',{'info_message':info_message,})
             user_fname = Custom_User.objects.get(access_code=access_code).first_name
             user_sections = get_sections(access_code)
-            return set_cookies(request,access_code,user_fname,user_sections) # Loads homepage and sets cookies for logged in user
+            return set_cookies(request,access_code,user_fname,user_sections,sections_and_modules) # Loads homepage and sets cookies for logged in user
 
         elif 'first_name' in request.POST: # Coming from register.html
             user_fname,user_lname,email = request.POST['first_name'],request.POST['last_name'],request.POST['email']
@@ -47,7 +47,7 @@ def home(request):
             # Send e-mail to newly registered user
             email_body = '''Hi {}!\n\nThank you for signing up to the Berea College Labor Program\'s Tracy Training Modules.\nHere is your access code: {}\n\nPlease use the provided code to login to the website. If you have any questions, feel free to send us an email.\n\nBest Regards,\nThe Labor Program Team'''.format(user_fname,access_code)
             send_mail('Tracy Training Modules Access Code',email_body,'iahadkhan98@gmail.com',[email],fail_silently=False)
-            return set_cookies(request,access_code,user_fname,user_sections)
+            return set_cookies(request,access_code,user_fname,user_sections,sections_and_modules)
 
     else: # GET Method
 
@@ -61,13 +61,12 @@ def home(request):
                 info_message = {'success_or_danger':'success','strong_text':'Success!','info_text':'Section {} has been successfully unlocked.'.format(int(sec_num)+1)}
                 if sec_num == '11':
                     info_message = {'success_or_danger':'success','strong_text':'Congratulations!','info_text':'You have successfully completed the Tracy Training Modules.'.format(int(sec_num)+1)}
-                return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message})
+                return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message,'section_range':sections_and_modules})
 
             return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
 
         else:
-            print(sections_and_modules)
-            return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname})
+            return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'section_range':sections_and_modules})
 
 
 def login(request):
@@ -86,6 +85,7 @@ def register(request):
     return render(request,'register.html',{'access_code':access_code,'user_fname':user_fname})
 
 def module(request,sec_num,module_num):
+    sections_and_modules = get_sections_range()
     access_code,user_fname = get_cookies(request)
     if access_code != '':
         user_sections = get_sections(access_code)
@@ -93,22 +93,23 @@ def module(request,sec_num,module_num):
             content = Content.objects.filter(section_num=sec_num,module_num=module_num)
             if len(content) != 0:
                 content = content[0]
-                return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'content':content})
+                return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'content':content,'section_range':sections_and_modules})
             else:
-                return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+                return render(request,'module.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
     else:
-        return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname})
+        return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'section_range':sections_and_modules})
 
 def quiz(request,sec_num):
+    sections_and_modules = get_sections_range()
     access_code,user_fname = get_cookies(request)
     if access_code != '':
         user_sections = get_sections(access_code)
         if user_sections[sec_num-1] == '1':
-            return render(request,'quiz.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'sec_num':sec_num})
+            return render(request,'quiz.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'sec_num':sec_num,'section_range':sections_and_modules})
         else:
-            return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections})
+            return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
     else:
-        return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname})
+        return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'section_range':sections_and_modules})
 
 def enable_next_section_and_redirect(request,sec_num):
     access_code,user_fname = get_cookies(request)

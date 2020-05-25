@@ -62,15 +62,14 @@
       <hr class="sidebar-divider">
 
       <!-- Heading -->
+  {% if section_range %}
       <div class="sidebar-heading">
         Sections
       </div>
-
       <!-- Nav Item - Pages Collapse Menu -->
-      
+    <div>
       {% for section,module in section_range.items %}
         {% with section_idx=section|add:"-1" %}
-        <div>
            <li class="nav-item">
             <a class="nav-link collapsed" {% if '1' == user_sections|by_idx:section_idx %}href="#" data-toggle="collapse" data-target="#sec{{section}}"{%  endif %}>
               <i class="fas fa-fw fa-cog"></i>
@@ -83,207 +82,13 @@
                     <a class="collapse-item" href="/section{{section}}-module{{forloop.counter}}/">Module {{forloop.counter}}</a>
                   {% endfor %}
                   <a class="collapse-item" href="/section{{section}}-quiz/">Quiz</a>
-                  {% comment %} <a class="collapse-item" href="/section1-module1/">Module 1</a>
-                  <a class="collapse-item" href="/section1-module2/">Module 2</a>
-                  <a class="collapse-item" href="/section1-module3/">Module 3</a>
-                  <a class="collapse-item" href="/section{{section}}-quiz/">Quiz</a> {% endcomment %}
               </div>
             </div>
           </li>
-        </div>
       {% endwith %}
       {% endfor %}
-
-      {% comment %} 
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.0 %}href="#" data-toggle="collapse" data-target="#sec1"{%  endif %}>
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 1</span>
-        </a>
-        <div id="sec1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules</h6>
-            <a class="collapse-item" href="/section1-module1/">Module 1</a>
-            <a class="collapse-item" href="/section1-module2/">Module 2</a>
-            <a class="collapse-item" href="/section1-module3/">Module 3</a>
-            <a class="collapse-item" href="/section1-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.1 %}href="#" data-toggle="collapse" data-target="#sec2"{% endif %} >
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 2</span>
-        </a>
-        <div id="sec2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules</h6>
-            <a class="collapse-item" href="/section2-module1/">Module 1</a>
-            <a class="collapse-item" href="/section2-module2/">Module 2</a>
-            <a class="collapse-item" href="/section2-module3/">Module 3</a>
-            <a class="collapse-item" href="/section2-module4/">Module 4</a>
-            <a class="collapse-item" href="/section2-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.2 %}href="#" data-toggle="collapse" data-target="#sec3" {% endif %}>
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 3</span>
-        </a>
-        <div id="sec3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules</h6>
-            <a class="collapse-item" href="/section3-module1/">Module 1</a>
-            <a class="collapse-item" href="/section3-module2/">Module 2</a>
-            <a class="collapse-item" href="/section3-module3/">Module 3</a>
-            <a class="collapse-item" href="/section3-module4/">Module 4</a>
-            <a class="collapse-item" href="/section3-module5/">Module 5</a>
-            <a class="collapse-item" href="/section3-module6/">Module 6</a>
-            <a class="collapse-item" href="/section3-module7/">Module 7</a>
-            <a class="collapse-item" href="/section3-module8/">Module 8</a>
-            <a class="collapse-item" href="/section3-module9/">Module 9</a>
-            <a class="collapse-item" href="/section3-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.3 %}href="#" data-toggle="collapse" data-target="#sec4" {% endif %}>
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 4</span>
-        </a>
-        <div id="sec4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules (Tentative)</h6>
-            <a class="collapse-item" href="/section4-module1/">Module 1</a>
-            <a class="collapse-item" href="/section4-module2/">Module 2</a>
-            <a class="collapse-item" href="/section4-module3/">Module 3</a>
-            <a class="collapse-item" href="/section4-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.4 %}href="#" data-toggle="collapse" data-target="#sec5" {% endif %}>
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 5</span>
-        </a>
-        <div id="sec5" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules (Tentative)</h6>
-            <a class="collapse-item" href="/section5-module1/">Module 1</a>
-            <a class="collapse-item" href="/section5-module2/">Module 2</a>
-            <a class="collapse-item" href="/section5-module3/">Module 3</a>
-            <a class="collapse-item" href="/section5-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.5 %}href="#" data-toggle="collapse" data-target="#sec6" {% endif %}>
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 6</span>
-        </a>
-        <div id="sec6" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules (Tentative)</h6>
-            <a class="collapse-item" href="/section6-module1/">Module 1</a>
-            <a class="collapse-item" href="/section6-module2/">Module 2</a>
-            <a class="collapse-item" href="/section6-module3/">Module 3</a>
-            <a class="collapse-item" href="/section6-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.6 %}href="#" data-toggle="collapse" data-target="#sec7" {% endif %}>
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 7</span>
-        </a>
-        <div id="sec7" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules</h6>
-            <a class="collapse-item" href="/section7-module1/">Module 1</a>
-            <a class="collapse-item" href="/section7-module2/">Module 2</a>
-            <a class="collapse-item" href="/section7-module3/">Module 3</a>
-            <a class="collapse-item" href="/section7-module4/">Module 4</a>
-            <a class="collapse-item" href="/section7-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.7 %}href="#" data-toggle="collapse" data-target="#sec8" {% endif %}>
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 8</span>
-        </a>
-        <div id="sec8" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules</h6>
-            <a class="collapse-item" href="/section8-module1/">Module 1</a>
-            <a class="collapse-item" href="/section8-module2/">Module 2</a>
-            <a class="collapse-item" href="/section8-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.8 %}href="#" data-toggle="collapse" data-target="#sec9" {% endif %}>
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 9</span>
-        </a>
-        <div id="sec9" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules</h6>
-            <a class="collapse-item" href="/section9-module1/">Module 1</a>
-            <a class="collapse-item" href="/section9-module2/">Module 2</a>
-            <a class="collapse-item" href="/section9-module3/">Module 3</a>
-            <a class="collapse-item" href="/section9-module4/">Module 4</a>
-            <a class="collapse-item" href="/section9-module5/">Module 5</a>
-            <a class="collapse-item" href="/section9-module6/">Module 6</a>
-            <a class="collapse-item" href="/section9-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.9 %}href="#" data-toggle="collapse" data-target="#sec10"{% endif %} >
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 10</span>
-        </a>
-        <div id="sec10" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules</h6>
-            <a class="collapse-item" href="/section10-module1/">Module 1</a>
-            <a class="collapse-item" href="/section10-module2/">Module 2</a>
-            <a class="collapse-item" href="/section10-module3/">Module 3</a>
-            <a class="collapse-item" href="/section10-module4/">Module 4</a>
-            <a class="collapse-item" href="/section10-module5/">Module 5</a>
-            <a class="collapse-item" href="/section10-module6/">Module 6</a>
-            <a class="collapse-item" href="/section10-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" {% if '1' == user_sections.10 %}href="#" data-toggle="collapse" data-target="#sec11"{% endif %} >
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Section 11</span>
-        </a>
-        <div id="sec11" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Modules</h6>
-            <a class="collapse-item" href="/section11-module1/">Module 1</a>
-            <a class="collapse-item" href="/section11-module2/">Module 2</a>
-            <a class="collapse-item" href="/section11-quiz/">Quiz</a>
-          </div>
-        </div>
-      </li> {% endcomment %}
-
-
+    </div>
+  {% endif %}
 
       <!-- Divider -->
       <hr class="sidebar-divider">

@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from home_app.models import Custom_User,Content
 
-def set_cookies(request,access_code,user_fname,user_sections):
+def set_cookies(request,access_code,user_fname,user_sections,sections_and_modules):
     info_message = {'success_or_danger':'success','strong_text':'Welcome, {}!'.format(user_fname),'info_text':'You have been successfully authorized.'}
-
-    response = render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message})
+    
+    response = render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message,'section_range':sections_and_modules})
     response.set_cookie('access_code',access_code)
     response.set_cookie('user_fname',user_fname)
     return response
