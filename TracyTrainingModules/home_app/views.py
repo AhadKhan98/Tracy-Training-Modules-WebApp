@@ -39,14 +39,15 @@ def home(request):
             return set_cookies(request,access_code,user_fname,user_sections,sections_and_modules) # Loads homepage and sets cookies for logged in user
 
         elif 'first_name' in request.POST: # Coming from register.html
-            user_fname,user_lname,email = request.POST['first_name'],request.POST['last_name'],request.POST['email']
+            user_fname,user_lname,email,user_type = request.POST['first_name'],request.POST['last_name'],request.POST['email'],request.POST['user_type']
+
             access_code = generate_access_code()
-            user = Custom_User(access_code=access_code,user_type='sup',first_name=user_fname,last_name=user_lname,email=email,sections='1,0,0,0,0,0,0,0,0,0,0')
+            user = Custom_User(access_code=access_code,user_type=user_type,first_name=user_fname,last_name=user_lname,email=email,sections='1,0,0,0,0,0,0,0,0,0,0')
             user.save()
             user_sections = get_sections(access_code)
             # Send e-mail to newly registered user
-            email_body = '''Hi {}!\n\nThank you for signing up to the Berea College Labor Program\'s Tracy Training Modules.\nHere is your access code: {}\n\nPlease use the provided code to login to the website. If you have any questions, feel free to send us an email.\n\nBest Regards,\nThe Labor Program Team'''.format(user_fname,access_code)
-            send_mail('Tracy Training Modules Access Code',email_body,'iahadkhan98@gmail.com',[email],fail_silently=False)
+            # email_body = '''Hi {}!\n\nThank you for signing up to the Berea College Labor Program\'s Tracy Training Modules.\nHere is your access code: {}\n\nPlease use the provided code to login to the website. If you have any questions, feel free to send us an email.\n\nBest Regards,\nThe Labor Program Team'''.format(user_fname,access_code)
+            # send_mail('Tracy Training Modules Access Code',email_body,'iahadkhan98@gmail.com',[email],fail_silently=False)
             return set_cookies(request,access_code,user_fname,user_sections,sections_and_modules)
 
     else: # GET Method
@@ -112,9 +113,10 @@ def quiz(request,sec_num):
         return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'section_range':sections_and_modules})
 
 def enable_next_section_and_redirect(request,sec_num):
+    num_of_sections = len(get_sections_range())
     access_code,user_fname = get_cookies(request)
     user_sections = get_sections(access_code)
-    if sec_num == 11:
+    if sec_num == num_of_sections:
         return HttpResponseRedirect(reverse('home'))
     user_sections[sec_num] = '1'
     updated_sections = ",".join(user_sections)
