@@ -69,7 +69,7 @@
       <!-- Nav Item - Pages Collapse Menu -->
     <div>
       {% for section,module in section_range.items %}
-        {% with section_idx=section|add:"-1" %}
+        {% with section_idx=section %}
            <li class="nav-item">
             <a class="nav-link collapsed" {% if '1' == user_sections|by_idx:section_idx %}href="#" data-toggle="collapse" data-target="#sec{{section}}"{%  endif %}>
               <i class="fas fa-fw fa-cog"></i>

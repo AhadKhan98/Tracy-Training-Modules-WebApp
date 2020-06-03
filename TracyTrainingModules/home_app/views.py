@@ -10,7 +10,15 @@ from django.core.mail import send_mail
 def home(request):
 
     # Gets list of all available sections and modules
+    access_code,user_fname = get_cookies(request)
     sections_and_modules = get_sections_range()
+    if access_code:
+        current_user_type = Custom_User.objects.get(access_code=access_code).user_type
+        sections_by_user_type = get_sections_range(current_user_type)
+        sections_by_user_type.update(sections_and_modules)
+        sections_and_modules = sections_by_user_type
+    print(sections_and_modules)
+    
 
     # Gives global access to all access codes stored in the database
     all_users = Custom_User.objects.all()
@@ -40,9 +48,15 @@ def home(request):
 
         elif 'first_name' in request.POST: # Coming from register.html
             user_fname,user_lname,email,user_type = request.POST['first_name'],request.POST['last_name'],request.POST['email'],request.POST['user_type']
-
+            default_sections = ''
+            if user_type == 'Student':
+                user_type = 'stu'
+                default_sections = '1,0,0,0,0,0,0,0,0,0,0'
+            else:
+                user_type = 'sup'
+                default_sections = '1,1,0,0,0,0,0,0,0,0,0'
             access_code = generate_access_code()
-            user = Custom_User(access_code=access_code,user_type=user_type,first_name=user_fname,last_name=user_lname,email=email,sections='1,0,0,0,0,0,0,0,0,0,0')
+            user = Custom_User(access_code=access_code,user_type=user_type,first_name=user_fname,last_name=user_lname,email=email,sections=default_sections)
             user.save()
             user_sections = get_sections(access_code)
             # Send e-mail to newly registered user
@@ -60,7 +74,7 @@ def home(request):
             if referer is not None and 'section' in referer and 'quiz' in referer:
                 sec_num = referer[referer.index('n')+1:referer.index('-')]
                 info_message = {'success_or_danger':'success','strong_text':'Success!','info_text':'Section {} has been successfully unlocked.'.format(int(sec_num)+1)}
-                if sec_num == '11':
+                if sec_num == '10':
                     info_message = {'success_or_danger':'success','strong_text':'Congratulations!','info_text':'You have successfully completed the Tracy Training Modules.'.format(int(sec_num)+1)}
                 return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message,'section_range':sections_and_modules})
 
@@ -86,6 +100,7 @@ def register(request):
     return render(request,'register.html',{'access_code':access_code,'user_fname':user_fname})
 
 def module(request,sec_num,module_num):
+    
     sections_and_modules = get_sections_range()
     access_code,user_fname = get_cookies(request)
     if access_code != '':
@@ -105,7 +120,7 @@ def quiz(request,sec_num):
     access_code,user_fname = get_cookies(request)
     if access_code != '':
         user_sections = get_sections(access_code)
-        if user_sections[sec_num-1] == '1':
+        if user_sections[sec_num] == '1':
             return render(request,'quiz.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'sec_num':sec_num,'section_range':sections_and_modules})
         else:
             return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
@@ -116,9 +131,10 @@ def enable_next_section_and_redirect(request,sec_num):
     num_of_sections = len(get_sections_range())
     access_code,user_fname = get_cookies(request)
     user_sections = get_sections(access_code)
+    print("SECNUM:{} | NUMOFSEC:{}".format(sec_num,num_of_sections))
     if sec_num == num_of_sections:
         return HttpResponseRedirect(reverse('home'))
-    user_sections[sec_num] = '1'
+    user_sections[sec_num+1] = '1'
     updated_sections = ",".join(user_sections)
     usr = Custom_User.objects.get(access_code=access_code)
     usr.sections = updated_sections

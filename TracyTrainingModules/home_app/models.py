@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Custom_User(models.Model):
     access_code = models.CharField(max_length=25)
-    user_type = models.CharField(max_length=5,choices=(('Student','stu'),('Supervisor','sup')),default='stu')
+    user_type = models.CharField(max_length=5,choices=(('stu','stu'),('sup','sup')),default='stu')
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
@@ -17,6 +17,7 @@ class Content(models.Model):
     module_num = models.IntegerField()
     yt_link = models.TextField(max_length=None)
     content = models.TextField(max_length=None)
+    show_to = models.CharField(max_length=5,choices=(('all','all'),('stu','stu'),('sup','sup')),default='all')
 
     def __str__(self):
         return 'Section:{} | Module:{} '.format(self.section_num,self.module_num)
