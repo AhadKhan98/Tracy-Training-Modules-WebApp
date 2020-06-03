@@ -131,7 +131,6 @@ def enable_next_section_and_redirect(request,sec_num):
     num_of_sections = len(get_sections_range())
     access_code,user_fname = get_cookies(request)
     user_sections = get_sections(access_code)
-    print("SECNUM:{} | NUMOFSEC:{}".format(sec_num,num_of_sections))
     if sec_num == num_of_sections:
         return HttpResponseRedirect(reverse('home'))
     user_sections[sec_num+1] = '1'
