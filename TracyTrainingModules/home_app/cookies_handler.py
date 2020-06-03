@@ -44,3 +44,12 @@ def get_sections_range(show_to='all'):
         else:
             sections_and_modules[current_section_num] += 1
     return sections_and_modules
+
+def update_sections_by_user_type(request,sections_and_modules):
+    access_code,user_fname = get_cookies(request)
+    if access_code:
+        current_user_type = Custom_User.objects.get(access_code=access_code).user_type
+        sections_by_user_type = get_sections_range(current_user_type)
+        sections_by_user_type.update(sections_and_modules)
+        sections_and_modules = sections_by_user_type
+    return sections_and_modules

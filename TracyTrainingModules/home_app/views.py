@@ -10,14 +10,8 @@ from django.core.mail import send_mail
 def home(request):
 
     # Gets list of all available sections and modules
-    access_code,user_fname = get_cookies(request)
     sections_and_modules = get_sections_range()
-    if access_code:
-        current_user_type = Custom_User.objects.get(access_code=access_code).user_type
-        sections_by_user_type = get_sections_range(current_user_type)
-        sections_by_user_type.update(sections_and_modules)
-        sections_and_modules = sections_by_user_type
-    print(sections_and_modules)
+    sections_and_modules = update_sections_by_user_type(request,sections_and_modules)
     
 
     # Gives global access to all access codes stored in the database
@@ -102,6 +96,8 @@ def register(request):
 def module(request,sec_num,module_num):
     
     sections_and_modules = get_sections_range()
+    sections_and_modules = update_sections_by_user_type(request,sections_and_modules)
+
     access_code,user_fname = get_cookies(request)
     if access_code != '':
         user_sections = get_sections(access_code)
@@ -117,6 +113,8 @@ def module(request,sec_num,module_num):
 
 def quiz(request,sec_num):
     sections_and_modules = get_sections_range()
+    sections_and_modules = update_sections_by_user_type(request,sections_and_modules)
+
     access_code,user_fname = get_cookies(request)
     if access_code != '':
         user_sections = get_sections(access_code)
@@ -128,6 +126,8 @@ def quiz(request,sec_num):
         return render(request,'access_denied.html',{'access_code':access_code,'user_fname':user_fname,'section_range':sections_and_modules})
 
 def enable_next_section_and_redirect(request,sec_num):
+    sections_and_modules = get_sections_range()
+    sections_and_modules = update_sections_by_user_type(request,sections_and_modules)
     num_of_sections = len(get_sections_range())
     access_code,user_fname = get_cookies(request)
     user_sections = get_sections(access_code)
