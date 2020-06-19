@@ -1,0 +1,18 @@
+{% extends 'home.html' %}
+{% block module %}
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary" style="font-size:120%">Certificate of Completion</h6>
+  </div>
+  <div class="card-body">
+    <h6>Congratulations, {{user_fname}}! You have successfully completed all of the sections in the Tracy Training Modules.
+    We hope you had a great learning experience and feel more comfortable in using the Tracy WebAccess Feature.</h6>
+    <br>
+    <h6>Your certificate of completion has been e-mailed to you at <strong>{{usr_email}}</strong>, and can also be downloaded using the button below.</h6>
+    <br>
+    <div align="right">
+      <button class='btn btn-primary'>Download Certificate</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -27,4 +27,5 @@ urlpatterns = [
     path('section<int:sec_num>-quiz/',home_view.quiz,name='quiz'),
     path('logout/',home_view.logout,name='logout'),
     path('section<int:sec_num>-success/',home_view.enable_next_section_and_redirect, name='enable_next_section_and_redirect'),
+    path('completion/',home_view.completion,name='completion'),
 ]

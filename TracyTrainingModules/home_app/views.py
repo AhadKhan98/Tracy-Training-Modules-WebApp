@@ -12,7 +12,7 @@ def home(request):
     # Gets list of all available sections and modules
     sections_and_modules = get_sections_range()
     sections_and_modules = update_sections_by_user_type(request,sections_and_modules)
-    
+
 
     # Gives global access to all access codes stored in the database
     all_users = Custom_User.objects.all()
@@ -69,7 +69,8 @@ def home(request):
                 sec_num = referer[referer.index('n')+1:referer.index('-')]
                 info_message = {'success_or_danger':'success','strong_text':'Success!','info_text':'Section {} has been successfully unlocked.'.format(int(sec_num)+1)}
                 if sec_num == '10':
-                    info_message = {'success_or_danger':'success','strong_text':'Congratulations!','info_text':'You have successfully completed the Tracy Training Modules.'.format(int(sec_num)+1)}
+                    return HttpResponseRedirect(reverse('completion'))
+
                 return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'info_message':info_message,'section_range':sections_and_modules})
 
             return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
@@ -94,7 +95,7 @@ def register(request):
     return render(request,'register.html',{'access_code':access_code,'user_fname':user_fname})
 
 def module(request,sec_num,module_num):
-    
+
     sections_and_modules = get_sections_range()
     sections_and_modules = update_sections_by_user_type(request,sections_and_modules)
 
@@ -139,3 +140,13 @@ def enable_next_section_and_redirect(request,sec_num):
     usr.sections = updated_sections
     usr.save()
     return HttpResponseRedirect(reverse('home'))
+
+def completion(request):
+    access_code,user_fname = get_cookies(request)
+    if access_code != '':
+        user_sections = get_sections(access_code)
+    sections_and_modules = get_sections_range()
+    sections_and_modules = update_sections_by_user_type(request,sections_and_modules)
+    usr = Custom_User.objects.get(access_code=access_code)
+    usr_email = usr.email
+    return render(request,'completion.html',{'usr_email':usr_email, 'access_code':access_code, 'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
