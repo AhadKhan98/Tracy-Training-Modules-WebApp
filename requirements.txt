@@ -1,0 +1,4 @@
+# Requirements
+
+django == 3.0.8 # Web Development Framework
+pypdf2 == 1.26.0 # Required for generating pdfs
