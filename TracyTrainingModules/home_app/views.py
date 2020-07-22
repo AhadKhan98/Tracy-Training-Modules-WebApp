@@ -1,10 +1,17 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from home_app.models import Custom_User, Content
-from home_app.cookies_handler import *
-import random,string
+import mimetypes
+import os
+import random
+import string
+
+from django.conf import settings
 from django.core.mail import send_mail
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.shortcuts import render
+from django.urls import reverse
+
+from home_app.certificate_handler.certificate_handler import *
+from home_app.cookies_handler import *
+from home_app.models import Content, Custom_User
 
 
 def home(request):
@@ -143,10 +150,24 @@ def enable_next_section_and_redirect(request,sec_num):
 
 def completion(request):
     access_code,user_fname = get_cookies(request)
+    usr = Custom_User.objects.get(access_code=access_code)
     if access_code != '':
+        formatted_fullname = '{} {}'.format(user_fname.split(' ')[0], usr.last_name.split(' ')[0])
+        generate_certificate(formatted_fullname, access_code)
         user_sections = get_sections(access_code)
     sections_and_modules = get_sections_range()
     sections_and_modules = update_sections_by_user_type(request,sections_and_modules)
     usr = Custom_User.objects.get(access_code=access_code)
+    print(usr.last_name)
     usr_email = usr.email
     return render(request,'completion.html',{'usr_email':usr_email, 'access_code':access_code, 'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
+
+def download_certificate(request, access_code):
+    file_path = os.path.join(settings.BASE_DIR,'home_app/certificate_handler/{}.pdf'.format(access_code))
+    mime_type, _ = mimetypes.guess_type(file_path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as file:
+            response = HttpResponse(file.read(), content_type=mime_type)
+            response['Content-Disposition'] = 'inline; filename={}'.format(file_path)
+            return response
+    raise Http404
