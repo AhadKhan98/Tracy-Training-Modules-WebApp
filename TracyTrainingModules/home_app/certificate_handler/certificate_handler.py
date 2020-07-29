@@ -2,6 +2,8 @@ from PyPDF2 import PdfFileWriter, PdfFileReader
 import io, os
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
+from django.core.mail import EmailMessage
+
 
 
 def generate_certificate(fullname, access_code):
@@ -30,4 +32,14 @@ def generate_certificate(fullname, access_code):
     outputStream = open("{}/{}.pdf".format(file_dir, access_code), "wb")
     output.write(outputStream)
     outputStream.close()
+
+def email_certificate(subject, body, emailFrom, emailTo, certificate):
+    email = EmailMessage(
+        subject,
+        body,
+        emailFrom,
+        [emailTo],
+    )
+    email.attach_file(certificate)
+    email.send(fail_silently=False)
 

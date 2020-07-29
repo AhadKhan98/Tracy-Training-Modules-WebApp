@@ -160,6 +160,8 @@ def completion(request):
     usr = Custom_User.objects.get(access_code=access_code)
     print(usr.last_name)
     usr_email = usr.email
+    # certificate_path = os.path.join(settings.BASE_DIR,'home_app/certificate_handler/{}.pdf'.format(access_code))
+    # email_certificate('Tracy Modules Completion Certificate', 'Congratulations! You have completed the tracy modules', 'iahadkhan98@gmail.com', usr_email, certificate_path)
     return render(request,'completion.html',{'usr_email':usr_email, 'access_code':access_code, 'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
 
 def download_certificate(request, access_code):
