@@ -13,6 +13,8 @@ from home_app.certificate_handler.certificate_handler import *
 from home_app.cookies_handler import *
 from home_app.models import Content, Custom_User
 
+from django.contrib.auth.models import User
+
 
 def home(request):
 
@@ -83,7 +85,7 @@ def home(request):
             return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'user_sections':user_sections,'section_range':sections_and_modules})
 
         else:
-            return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'section_range':sections_and_modules})
+            return render(request,'home.html',{'access_code':access_code,'user_fname':user_fname,'section_range':None})
 
 
 def login(request):
@@ -173,3 +175,12 @@ def download_certificate(request, access_code):
             response['Content-Disposition'] = 'inline; filename={}'.format(file_path)
             return response
     raise Http404
+
+def admin_panel(request):
+
+    if User.is_superuser:
+        return render(request, 'admin-panel.html')
+    else:
+        return render(request, 'access_denied.html')
+
+

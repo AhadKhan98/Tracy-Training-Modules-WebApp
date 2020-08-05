@@ -32,7 +32,6 @@
 
 <body id="page-top">
 
-
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -45,6 +44,16 @@
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
+
+      {% if user.is_superuser %}
+          <a class='nav-link' align='center' href='/admin-panel/'>
+            <i>
+              <button class='btn btn-primary'> Admin Panel </button>
+            </i>
+          </a>
+        {% endif %}
+
+
       <li class="nav-item active">
         {% if user_fname %}
         <a class="nav-link">
@@ -56,6 +65,8 @@
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Login</span></a>
           {% endif %}
+        
+
       </li>
 
       <!-- Divider -->
