@@ -13,7 +13,6 @@ from home_app.certificate_handler.certificate_handler import *
 from home_app.cookies_handler import *
 from home_app.models import Content, Custom_User
 
-from django.contrib.auth.models import User
 
 
 def home(request):
@@ -178,7 +177,20 @@ def download_certificate(request, access_code):
 
 def admin_panel(request):
 
-    if User.is_superuser:
+    if request.user.is_superuser:
+        match = None
+        completed_all = None
+        if request.method == 'POST':
+            access_code = request.POST['search_query']
+            try:
+                match = Custom_User.objects.get(access_code=access_code)
+                completed_all = match.sections[-1]
+                print(completed_all)
+            except Custom_User.DoesNotExist:
+                match = ''
+            return render(request, 'admin-panel.html', {'match':match, 'completed_all':completed_all})
+
+        print(match)
         return render(request, 'admin-panel.html')
     else:
         return render(request, 'access_denied.html')
