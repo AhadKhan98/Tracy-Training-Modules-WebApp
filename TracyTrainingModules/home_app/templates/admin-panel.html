@@ -7,11 +7,24 @@
         <div class="card-body"> 
             <form action="{% url 'admin-panel' %}" method="POST">         
                 {% csrf_token %}
-                <label for='search_query'>Search: </label>
-                <input required placeholder='Enter access code here' id='search_query' class='form-control' style='width:30%' type='text' name='search_query'>
+                <label for='search_select'>Search Using: </label>
+                <select onclick="updateInput()" style="width:15%" class='form-control' id="search_select" name="search_select">
+                    <option>Email Address</option>
+                    <option>Access Code</option>
+                </select>
+                <br>
+                <input required placeholder='Enter Email Address Here' id='search_query' class='form-control' style='width:30%' type='text' name='search_query'>
                 <br>
                 <input id='search_button' class='btn btn-success' type="submit" value="Search">
-            </form>  
+            </form>
+            <script>
+                updateInput = function() {
+                    search_input = document.querySelector("#search_query");
+                    search_select = document.querySelector("#search_select");
+                    search_input.placeholder = 'Enter ' + search_select.value + ' Here'
+                }
+
+            </script>
             {% if match.first_name %}
                 <br>
                 <br>

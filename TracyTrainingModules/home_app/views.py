@@ -180,10 +180,23 @@ def admin_panel(request):
     if request.user.is_superuser:
         match = None
         completed_all = None
+        search_by = ''
         if request.method == 'POST':
-            access_code = request.POST['search_query']
+            search_method = request.POST['search_select']
+            search_query = request.POST['search_query']
+            print(search_method, search_query)
+            if 'Access Code' in search_method:
+                search_by = 'access_code'
+            else:
+                search_by = 'email'
             try:
-                match = Custom_User.objects.get(access_code=access_code)
+                print(search_by)
+                if search_by == 'access_code':
+                    print('searchin using access_code')
+                    match = Custom_User.objects.get(access_code=search_query)
+                else:
+                    print('searching using email')
+                    match = Custom_User.objects.get(email=search_query)
                 completed_all = match.sections[-1]
                 print(completed_all)
             except Custom_User.DoesNotExist:
